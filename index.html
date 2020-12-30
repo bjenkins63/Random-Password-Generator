@@ -1,92 +1,113 @@
-
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="styles.css">
 
-  </head>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="styles.css">
+
+</head>
 
 <body>
 
   <div class="container">
 
     <main>
-        <div class="card">
-          <h1>Password Generator</h1>
-          <div class="result-container">
-            <span id="result-textfield"></span>
-            <button class="clip-btn" id="clipboard">
-              <p>Copy</p>
-            </button>
+      <div class="card">
+        <h1>Password Generator</h1>
+        <div class="result-container">
+          <div> <p id="result-textfield"> </p></div>
+          <button class="clip-btn" id="clipboard">
+            <p>Copy</p>
+          </button>
+        </div>
+        <form name="generator">
+          <input id="uppercase" type="checkbox" name="uppercase" checked="checked">
+          <label for="uppercase"> uppercase </label> <br>
+
+          <input id="lowercase" type="checkbox" name="lowercase" checked="checked">
+          <label for="lowercase"> lowercase </label> <br>
+
+          <input id="numbers" type="checkbox" name="numbers" checked="checked">
+          <label for="numbers"> numbers </label> <br>
+
+          <input id="symbols" type="checkbox" name="symbols" checked="checked">
+          <label for="symbols"> symbols </label> <br>
+
+          <p>Drag the slider to display number of characters (8-128).</p>
+
+          <div class="slidecontainer">
+            <input name="charLength" type="range" min="8" max="128" value="68" class="slider" id="myRange"><br>
+            <p>Characters: <span id="demo"></span></p>
           </div>
-    <form name="generator">
-        <input id="uppercase" type="checkbox" name="uppercase" checked="checked">
-    <label for="uppercase"> uppercase </label> <br>
 
-    <input id="lowercase" type="checkbox" name="lowercase" checked="checked">
-    <label for="uppercase"> uppercase </label> <br>
+          <br>
 
-    <input id="numbers" type="checkbox" name="numbers" checked="checked">
-    <label for="numbers"> numbers </label> <br>
+          password length: <input type="number" name="length" min="8" max="128"><br>
 
-    <input id="symbols" type="checkbox" name="symbols" checked="checked">
-    <label for="symbols"> symbols </label> <br>
+          <button type="button" onclick="getPasswords();">Generate Password</button>
+        </form>
 
-    password length: <input type="number" name="length" min="8" max="128"><br>
-    
-    <button type="button" onclick="getPasswords();">Generate Password</button>
-    </form>
+        <ul id="passwords"></ul>
 
-    <ul id="passwords"></ul>
+        <script type="text/javascript">
 
-    <script type="text/javascript">
+          var uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+          var lowercase = "abcdefghijklmnopqrstuvwxyz";
+          var numbers = "0123456789";
+          var symbols = "!@#$%^&*()";
 
-    var uppercase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    var lowercase = "abcdefghijklmnopqrstuvwxyz";
-    var numbers = "0123456789";
-    var symbols = "!@#$%^&*()";
+          var slider = document.getElementById("myRange");
+          var output = document.getElementById("demo");
+          output.innerHTML = slider.value;
 
-    function getPasswords() {
-        var textField = document.getElementById('result-textfield');
-        textField.innerHTML = '';
-          textField.textContent = generatePasswords();
-    }
+          slider.oninput = function () {
+            output.innerHTML = this.value;
+          }
 
-    function generatePasswords(){
-        var allowed = '';    
-        if (document.generator.uppercase.checked) {
-            allowed += uppercase;
-        }
-        if (document.generator.lowercase.checked) {
-            allowed += lowercase; 
-        }
-        if (document.generator.numbers.checked) {
-            allowed += numbers;
-        }
-        if (document.generator.symbols.checked) {
-            allowed += symbols;
-        } 
+          function getPasswords() {
+            var textField = document.getElementById('result-textfield');
+            textField.innerHTML = '';
+            textField.textContent = generatePasswords();
+          }
 
-        var password = '';
-        var length = parseInt(document.generator.length.value);
-        for(var i = 0; i<length; i++){
-            var random = Math.floor(Math.random() * allowed.length);
-            password += allowed[random];
+          function generatePasswords() {
+            var allowed = '';
+            if (document.generator.uppercase.checked) {
+              allowed += uppercase;
+            }
+            if (document.generator.lowercase.checked) {
+              allowed += lowercase;
+            }
+            if (document.generator.numbers.checked) {
+              allowed += numbers;
+            }
+            if (document.generator.symbols.checked) {
+              allowed += symbols;
+            }
 
-        }
-        return password;
-
-    }   
- 
-    </script>
+            var password = '';
+            var length = parseInt(document.generator.charLength.value);
+            for (var i = 0; i < length; i++) {
+              var random = Math.floor(Math.random() * allowed.length);
+              password += allowed[random];
+            }
 
 
 
- 
+
+            return password;
+
+          }
+
+        </script>
+
+
+
+
     </main>
-    
+
 </body>
+
 </html>
