@@ -62,7 +62,8 @@ body {
     margin: 1em 0;
   }
   .result-container div {
-    width: 280px;
+    width: 325px;
+    vertical-align: middle;
     align-content: center;
   }
   
